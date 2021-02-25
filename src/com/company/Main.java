@@ -83,7 +83,7 @@ public class Main {
 
         ArrayList<String> resultList = new ArrayList<String>();
         int count = 0; //first line of out put
-        int redLightCycle = 10;
+        int redLightCycle = 5;
         for (int j = 0; j <= S; j++) {
             ArrayList<String> tempStreetList = new ArrayList<String>();
             for (int i = 0; i <= S; i++) {
@@ -110,7 +110,7 @@ public class Main {
                 for (String s : tempStreetList) {
                     sumOfTotalPossibleTraffic += roadStatus.get(s);
                 }
-                float weight = 10 / sumOfTotalPossibleTraffic;
+                float weight = (float) 10 / sumOfTotalPossibleTraffic;
 
                 int checkSum = 0;
                 //Allocate cycle
@@ -118,11 +118,11 @@ public class Main {
                     int totalTrafficOnTheRoad = roadStatus.get(s);
                     int time = (int) weight * totalTrafficOnTheRoad;
                     checkSum +=time;
-                    resultList.add(s + " " + Integer.toString(D));
+                    resultList.add(s + " " + time);
                 }
 
                  if (checkSum != 10){
-                     System.out.println("ERROR");
+                     //System.out.println("ERROR");
                  }
             }
         }

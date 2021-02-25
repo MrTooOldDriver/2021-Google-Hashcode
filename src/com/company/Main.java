@@ -1,6 +1,8 @@
 package com.company;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class Main {
         }
         //file in over
         int D = in.nextInt(), I = in.nextInt(), S = in.nextInt(), V = in.nextInt(), F = in.nextInt();
+        System.out.println(S);
         Integer[][] intersectionArray = new Integer[S+1][S+1];
         String[][] intersectionName = new String[S+1][S+1];
         for (int i = 0; i < S; i++) {
@@ -63,13 +66,28 @@ public class Main {
             }
         }
 
-        System.out.println("test code start");
-        System.out.println(count);
-        for (String s : resultList) {
-            System.out.println(s);
-        }
+//        System.out.println("test code start");
+//        System.out.println(count);
+//        for (String s : resultList) {
+//            System.out.println(s);
+//        }
+        printResultToFile(count,resultList,args[0]);
 
     }
 
+    public static void printResultToFile(int totalCount,ArrayList<String> resultList, String inputFileName){
+        try {
+            FileWriter myWriter = new FileWriter(inputFileName+"_result.txt");
+            myWriter.write(totalCount+"\n");
+            for (String s : resultList) {
+                myWriter.write(s+"\n");
+            }
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
 
 }

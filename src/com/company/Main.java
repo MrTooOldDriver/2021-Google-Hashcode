@@ -5,9 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -17,6 +15,12 @@ public class Main {
         System.out.println(currentPath.toString());
         File myObj = new File(currentPath.toString());
         Scanner in = null;
+
+        //Initialize Cars
+        ArrayList<Car> cars = new ArrayList();
+        // Initialize street status
+        HashMap<String, Integer> roadStatus = new HashMap<>();
+
         try {
             in = new Scanner(myObj);
         } catch (FileNotFoundException e) {
@@ -31,6 +35,9 @@ public class Main {
             int start = in.nextInt();
             int end = in.nextInt();
             String name = in.next();
+
+            roadStatus.put(name, 0);
+
             int length = in.nextInt();
             System.out.println(start + " " + end + " " + name + " " + length);
             intersectionArray[start][end] = 1;
@@ -39,10 +46,21 @@ public class Main {
         for (int i = 0; i < V; i++) {
             int pass = in.nextInt();
             System.out.print(pass);
+
+            //Set up streets info for each cars
+            String streets[] = new String[pass-1];
+
             for (int j = 0; j < pass; j++) {
                 String intersection = in.next();
+
+                // The first street is ignored
+                if (j != 0) {
+                    streets[j-1] = intersection;
+                }
+
                 System.out.println(intersection);
             }
+            cars.add(new Car(streets));
         }
         System.out.println(D + " " + I + " " + S + " " + V + " " + F);
 
@@ -72,6 +90,26 @@ public class Main {
 //            System.out.println(s);
 //        }
         printResultToFile(count,resultList,args[0]);
+
+        /**
+         * 模拟路况 Steven
+         */
+        // Skip the first sec since nothing happen when sec = 0
+        for (int sec = 0; sec < D; sec++) {
+            for (Car car: cars) {
+                if (car.streets.length > 0) {
+                    roadStatus.put(car.streets[0], roadStatus.get(car.streets[0])+1);
+
+                    // Delete the first street
+                    car.streets = Arrays.copyOfRange(car.streets, 1, car.streets.length);
+                }
+
+            }
+        }
+
+
+
+        //
 
     }
 

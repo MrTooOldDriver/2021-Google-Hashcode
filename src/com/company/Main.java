@@ -24,9 +24,10 @@ public class Main {
         }
         //file in over
         int D = in.nextInt(), I = in.nextInt(), S = in.nextInt(), V = in.nextInt(), F = in.nextInt();
-        System.out.println(S);
-        Integer[][] intersectionArray = new Integer[S+1][S+1];
-        String[][] intersectionName = new String[S+1][S+1];
+        //System.out.println(S);
+
+        Integer[][] intersectionArray = new Integer[S+1][S+1]; //i -> j if there is road then =1
+        String[][] intersectionName = new String[S+1][S+1]; //street name
         for (int i = 0; i < S; i++) {
             int start = in.nextInt();
             int end = in.nextInt();
@@ -52,16 +53,18 @@ public class Main {
             ArrayList<String> tempStreetList = new ArrayList<String>();
             for (int i = 0; i <= S; i++) {
                 //System.out.println(i);
-                if ((intersectionArray[i][j]!=null)&&(intersectionArray[i][j] == 1)){
+                if ((intersectionArray[i][j]!=null)&&(intersectionArray[i][j] == 1)){ //if there is road between them
                     tempStreetList.add(intersectionName[i][j]);
                 }
             }
-            if (tempStreetList.size() > 0){
+            if (tempStreetList.size() > 0){ //if there is any road to j
+                //add into resultList in terms of output layout
                 count++;
                 resultList.add(Integer.toString(j));
                 resultList.add(Integer.toString(tempStreetList.size()));
                 for (String s : tempStreetList) {
                     resultList.add(s + " 1");
+                    //resultList.add(s +" " + Integer.toString(D));
                 }
             }
         }

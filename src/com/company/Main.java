@@ -3,10 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -19,6 +16,8 @@ public class Main {
 
         //Initialize Cars
         ArrayList<Car> cars = new ArrayList();
+        // Initialize street status
+        HashMap<String, Integer> roadStatus = new HashMap<>();
 
         try {
             in = new Scanner(myObj);
@@ -33,6 +32,9 @@ public class Main {
             int start = in.nextInt();
             int end = in.nextInt();
             String name = in.next();
+
+            roadStatus.put(name, 0);
+
             int length = in.nextInt();
             System.out.println(start + " " + end + " " + name + " " + length);
             intersectionArray[start][end] = 1;
@@ -88,12 +90,20 @@ public class Main {
         /**
          * 模拟路况 Steven
          */
-        HashMap<String, Integer> roadStatus = new HashMap<>();
-
         // Skip the first sec since nothing happen when sec = 0
-        for (int sec = 1; sec < D; sec++) {
+        for (int sec = 0; sec < D; sec++) {
+            for (Car car: cars) {
+                if (car.streets.length > 0) {
+                    roadStatus.put(car.streets[0], roadStatus.get(car.streets[0])+1);
 
+                    // Delete the first street
+                    car.streets = Arrays.copyOfRange(car.streets, 1, car.streets.length);
+                }
+
+            }
         }
+
+
 
         //
 
